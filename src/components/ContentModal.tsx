@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CrossIcon } from "../icons/CrossIcon";
 import { Button } from "./ui/Button";
+import { Input } from "./Input";
 
 
 export function ContentModal({open, onClose}){
@@ -22,18 +23,10 @@ export function ContentModal({open, onClose}){
                         <Input placeholder={"Type: twitter | youtube"} />
                     </div>
                     <div className="flex justify-center mt-2" >
-                        <Button variant={"primary"} text="Submit"/>
+                        <Button variant={"primary"} text={"Submit"} size={"md"}/>
                     </div>
                 </span>
             </div>
         </div>}
-    </div>
-}
-
-
-function Input({onChange, placeholder}: {onChange : () => void}){
-    return <div>
-        <input placeholder={placeholder} type={"text"} className="m-2 px-4 py-2 border rounded" onChange={onChange}>
-        </input>
     </div>
 }

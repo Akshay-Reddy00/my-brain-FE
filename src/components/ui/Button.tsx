@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { SpinnerIcon } from "../../icons/SpinnerIcon";
 
 interface ButtonProps {
     variant: Variants
@@ -7,6 +8,8 @@ interface ButtonProps {
     startIcon?: ReactElement;
     endIcon?: ReactElement;
     onClick?: () => void;
+    fullWidth?: boolean;
+    loading?: boolean;
 }
 
 type Variants = "primary" | "secondary"
@@ -21,12 +24,14 @@ const sizeStyles = {
     "md": "py-2 px-4",
     "lg": "py-4 px-8"
 }
-
 const defaultStyles = 'rounded-md flex'
 
 export const Button = (props: ButtonProps) => {
+
+    const width = props.fullWidth ? "w-full flex justify-center" : "";
+    const loading = props.loading ? "opacity-45 cursor-progress" : "";
     
-    return <button onClick={props.onClick} className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
+    return <button onClick={props.onClick} className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${width} ${loading}`}>
         <div className="flex items-center font-medium">
             {props.startIcon}
             <div className="pl-2 pr-2"> 
