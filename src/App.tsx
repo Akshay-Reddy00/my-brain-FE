@@ -10,6 +10,7 @@ function App() {
     <Route path="/signup" element={<Signup />} />
     <Route path="/signin" element={<SignIn />} />
     <Route path="/dashboard" element={<Dashboard />} />
+    TODO: Share endpoint
 
   </Routes>
   </BrowserRouter>
