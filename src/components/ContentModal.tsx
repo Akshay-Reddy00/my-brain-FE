@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import axios from "axios";
 import { CrossIcon } from "../icons/CrossIcon";
 import { Button } from "./ui/Button";
@@ -7,7 +7,6 @@ import { BACKEND_URL } from "../config";
 
 
 export function ContentModal({open, onClose}){
-    const [modal, setModal] = useState(false);
 
     const titleRef = useRef<HTMLInputElement>();
     const linkRef = useRef<HTMLInputElement>();
@@ -25,6 +24,7 @@ export function ContentModal({open, onClose}){
                 "Authorization": localStorage.getItem("token")
             }
         })
+        onClose();
     }
 
     return <div>

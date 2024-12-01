@@ -8,6 +8,7 @@ interface CardProps {
 }
 
 export function Card({title, link, type}: CardProps) {
+    const a= JSON.stringify;
     
     return( 
     <div>
@@ -15,7 +16,7 @@ export function Card({title, link, type}: CardProps) {
             <div className="flex justify-between">
                 <div className="flex items-center text-md font-medium">
                     <div className="text-gray-500 pr-2">
-                        <ShareIcon size={'md'}/>
+                        {/* <ShareIcon size={'md'}/> */}
                     </div>
                     {title}
                 </div>
@@ -26,7 +27,7 @@ export function Card({title, link, type}: CardProps) {
                         </a>
                     </div>
                     <div className="text-gray-500"> 
-                        <ShareIcon size={'md'}/>
+                        {/* <ShareIcon size={'md'}/> */}
                     </div> 
                 </div>
             </div>
@@ -40,8 +41,8 @@ export function Card({title, link, type}: CardProps) {
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen>
                 </iframe>}
-
-                {type === "twitter" && 
+                
+                {type === "twitter" &&
                 <blockquote className="twitter-tweet">
                     <a href={link.replace("x.com", "twitter.com")}></a>
                 </blockquote>}

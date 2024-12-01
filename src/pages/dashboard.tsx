@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import { useContent } from '../hooks/useContent'
 import { ContentModal } from '../components/ContentModal'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -9,6 +9,7 @@ import { SideBar } from '../components/ui/SideBar'
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
+  const contents =  useContent();
 
   return (
     <>
@@ -29,15 +30,10 @@ export function Dashboard() {
             startIcon={<ShareIcon size='md'/>}/>
         </div>
 
-        <div className='flex gap-4'>
-          <Card type={"youtube"} title={"First video"} 
-            link="https://www.youtube.com/watch?v=f82RH6mBquc"/>
-          <Card type={"youtube"} title={"Second video"} 
-            link="https://www.youtube.com/watch?v=WNejYnN13bw"/>
-          <Card type={"youtube"} title={"Third video"} 
-            link="https://www.youtube.com/watch?v=aFxvlxOqz0Q"/>
-          <Card type={"youtube"} title={"Third video"} 
-            link="https://www.youtube.com/watch?v=aFxvlxOqz0Q"/>
+        <div className='flex gap-4 flex-wrap'>
+          {contents.map(({type, link, title}, index) =>
+            <Card key={index} type={type} title={title} link={link}/>
+          )}
         </div>
       </div>
     </div>
