@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { SpinnerIcon } from "../../icons/SpinnerIcon";
 
 interface ButtonProps {
     variant: Variants
@@ -8,6 +7,7 @@ interface ButtonProps {
     startIcon?: ReactElement;
     endIcon?: ReactElement;
     onClick?: () => void;
+    onKeyDown?: () => void;
     fullWidth?: boolean;
     loading?: boolean;
 }
@@ -31,7 +31,7 @@ export const Button = (props: ButtonProps) => {
     const width = props.fullWidth ? "w-full flex justify-center" : "";
     const loading = props.loading ? "opacity-45 cursor-progress" : "";
     
-    return <button onClick={props.onClick} className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${width} ${loading}`}>
+    return <button onClick={props.onClick} onKeyDown={props.onKeyDown} className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${width} ${loading}`}>
         <div className="flex items-center font-medium">
             {props.startIcon}
             <div className="pl-2 pr-2"> 
