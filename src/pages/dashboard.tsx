@@ -15,18 +15,19 @@ export function Dashboard() {
 
   return (
     <>
-    <div className='grid grid-cols-5'>
-      <div className='col-span-1 border-r'>
+    <div className='flex flex-row w-full'>
+      {/* <div className='col-span-1 border-r'> */}
         <SideBar />
-      </div>
+      {/* </div> */}
 
-      <div className='m-2 p-4 col-span-4'>
+      <div className='bg-yellow-500 m-2 p-4 flex-1'>
         <ContentModal open={modalOpen} onClose={() => {setModalOpen(false);}} />
 
         <div className='flex justify-end gap-4'>
           <Button onClick={()=>{setModalOpen(true)}} variant={'primary'} size={'md'}
             text={'Add content'}
-            startIcon={<PlusIcon size='md'/>}></Button>
+            startIcon={<PlusIcon size='md'/>}/>
+
           <Button variant={'secondary'} size={'md'}
             text={'Share brain'} 
             startIcon={<ShareIcon size='md'/>}
@@ -47,7 +48,7 @@ export function Dashboard() {
             }}/>
         </div>
 
-        <div className='flex gap-4 flex-wrap'>
+        <div className='bg-red-300 p-4 flex flex-wrap justify-center md:justify-normal md:gap-4'>
           {contents.map(({type, link, title}, index) =>
             <Card key={index} type={type} title={title} link={link}/>
           )}

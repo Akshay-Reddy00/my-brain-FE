@@ -1,3 +1,4 @@
+import { CrossIcon } from "../../icons/CrossIcon";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { extractYouTubeUrl } from "../../utils";
 
@@ -7,14 +8,12 @@ interface CardProps {
     type: "twitter" | "youtube";
 }
 
-export function Card({title, link, type}: CardProps) {
-    const a= JSON.stringify;
-    
+export function Card({title, link, type}: CardProps) {    
     return( 
     <div>
         <div className="my-8 p-4 max-w-72 bg-white rounded-md border shadow-sm outline-slate-200">
-            <div className="flex justify-between">
-                <div className="flex items-center text-md font-medium">
+            <div className="flex justify-between items-center">
+                <div className="flex items-center text-lg font-bold">
                     <div className="text-gray-500 pr-2">
                         {/* <ShareIcon size={'md'}/> */}
                     </div>
@@ -22,7 +21,7 @@ export function Card({title, link, type}: CardProps) {
                 </div>
                 <div className="flex items-center">
                     <div className="pr-2 text-gray-500">
-                        <a href={link} target="_blank">
+                        <a href={link} target="_blank" className="hover:bg-purple-600">
                             <ShareIcon size={'md'}/>
                         </a>
                     </div>
