@@ -2,7 +2,7 @@ import { useRef } from "react";
 import axios from "axios";
 import { Input } from "../components/Input";
 import { Button } from "../components/ui/Button";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL, TOKEN, USERNAME } from "../config";
 import { useNavigate } from "react-router-dom";
 import { Label } from "../components/Label";
 
@@ -19,7 +19,8 @@ export function SignIn() {
             password
         })
         const jwt = response.data.token;
-        localStorage.setItem("token", jwt);
+        localStorage.setItem(TOKEN, jwt);
+        localStorage.setItem(USERNAME, username!);
         navigate("/dashboard");
     }
     

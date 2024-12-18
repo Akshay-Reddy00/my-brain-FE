@@ -3,7 +3,7 @@ import axios from "axios";
 import { CrossIcon } from "../icons/CrossIcon";
 import { Button } from "./ui/Button";
 import { Input } from "./Input";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL, TOKEN } from "../config";
 
 
 export function ContentModal({open, onClose}){
@@ -21,7 +21,7 @@ export function ContentModal({open, onClose}){
             link, title, type
         },{
             headers:{
-                "Authorization": localStorage.getItem("token")
+                "Authorization": localStorage.getItem(TOKEN)
             }
         })
         onClose();

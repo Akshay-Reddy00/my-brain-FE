@@ -7,7 +7,8 @@ import { Card } from '../components/ui/Card'
 import { PlusIcon } from '../icons/PlusIcon'
 import { ShareIcon } from '../icons/ShareIcon'
 import { SideBar } from '../components/ui/SideBar'
-import { FRONTEND_URL, BACKEND_URL } from '../config'
+import { FRONTEND_URL, BACKEND_URL, TOKEN } from '../config'
+import { NavTop } from '../components/ui/NavTop';
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,11 +17,12 @@ export function Dashboard() {
   return (
     <>
     <div className='flex flex-row w-full'>
-      {/* <div className='col-span-1 border-r'> */}
-        <SideBar />
-      {/* </div> */}
-
-      <div className='bg-yellow-500 m-2 p-4 flex-1'>
+      <SideBar />
+      <div>
+        <NavTop />
+      </div>
+      <div className='m-2 mt-20 p-4 flex-1'>
+        
         <ContentModal open={modalOpen} onClose={() => {setModalOpen(false);}} />
 
         <div className='flex justify-end gap-4'>
@@ -36,11 +38,9 @@ export function Dashboard() {
                 share: true
               }, {
                 headers: {
-                  "Authorization": localStorage.getItem("token")
+                  "Authorization": localStorage.getItem(TOKEN)
                 }
               });
-              console.log(BACKEND_URL);
-              console.log(FRONTEND_URL);
               console.log(response.data.hash);
               const shareUrl = `${FRONTEND_URL}${response.data.hash}`;
               console.log(shareUrl);
@@ -48,7 +48,7 @@ export function Dashboard() {
             }}/>
         </div>
 
-        <div className='bg-red-300 p-4 flex flex-wrap justify-center md:justify-normal md:gap-4'>
+        <div className='p-4 flex flex-wrap justify-center md:justify-normal md:gap-4'>
           {contents.map(({type, link, title}, index) =>
             <Card key={index} type={type} title={title} link={link}/>
           )}

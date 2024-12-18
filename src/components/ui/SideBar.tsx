@@ -1,16 +1,23 @@
+import { useNavigate } from "react-router-dom";
+import { TOKEN, USERNAME } from "../../config";
 import { BrainIcon } from "../../icons/BrainIcon";
 import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
 import { SideBarItem } from "./SideBarItem";
 
 export function SideBar() {
+    const navigate = useNavigate();
+    
     function logoutUser(){
-        console.log('Logout User');
+        localStorage.removeItem(TOKEN);
+        localStorage.removeItem(USERNAME);
+        navigate("/signin");
     }
+
     function deleteUser(){
         console.log('Delete User');
     }
-    return <div className="min-w-32 md:w-56 border h-screen flex flex-col">
+    return <div className="min-w-32 md:w-64 border h-screen flex flex-col">
         <div className="flex items-center p-2 md:py-4 md:justify-center">
             <div className="pr-1 md:pr-3">
                 <BrainIcon className="size-7 md:size-10"/>
