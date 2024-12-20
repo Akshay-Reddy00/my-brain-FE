@@ -1,28 +1,37 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { Input } from "../components/Input";
 import { Button } from "../components/ui/Button";
 import { BACKEND_URL, TOKEN, USERNAME } from "../config";
 import { useNavigate } from "react-router-dom";
 import { Label } from "../components/Label";
+import { AlertText } from "../components/ui/Alerts";
 
 export function SignIn() {
+    const [display, setDisplay] = useState(false);
+
     const usernameRef = useRef<HTMLInputElement>();
     const passwordRef = useRef<HTMLInputElement>();
     const navigate = useNavigate();
 
-    async function signIn(){
-        const username = usernameRef.current?.value;
-        const password = passwordRef.current?.value;
-        const response = await axios.post(BACKEND_URL + "/api/v1/signin",{
-            username,
-            password
-        })
-        const jwt = response.data.token;
-        localStorage.setItem(TOKEN, jwt);
-        localStorage.setItem(USERNAME, username!);
-        navigate("/dashboard");
-    }
+   
+        async function signIn() {
+            const username = usernameRef.current?.value;
+            const password = passwordRef.current?.value;
+            try {
+                const response = await axios.post(BACKEND_URL + "/api/v1/signin",{
+                    username,
+                    password
+                })
+                const jwt = response.data.token;
+                localStorage.setItem(TOKEN, jwt);
+                localStorage.setItem(USERNAME, username!);
+                navigate("/dashboard");
+            } catch (error: any) {
+                setDisplay(error.response.data.message);
+            }
+        }
+    
     
     return <div className="h-screen w-screen bg-gray-200 flex flex-col justify-center items-center">
         <div className="py-4">
@@ -38,6 +47,10 @@ export function SignIn() {
             <div className="py-2">
                 <Label label="Password"/>
                 <Input reference={passwordRef} placeholder={"Enter password"} />
+            </div>
+            
+            <div className="flex justify-center">
+                <AlertText display={display}/>
             </div>
             <div className="flex flex-col justify-center pt-4">
                 <Button variant={'primary'} text={'Sign In'} size={'md'} fullWidth={true} loading={false} 

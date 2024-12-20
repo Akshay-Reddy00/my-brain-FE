@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { TOKEN, USERNAME } from "../../config";
+import axios from "axios";
+import { BACKEND_URL, TOKEN, USERNAME } from "../../config";
 import { BrainIcon } from "../../icons/BrainIcon";
 import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
@@ -14,8 +15,21 @@ export function SideBar() {
         navigate("/signin");
     }
 
-    function deleteUser(){
+    async function deleteUser(){
         console.log('Delete User');
+        const confirmationText = 'DELETE' // Create a modal to popUp and take the confirmationText as input.
+            const response = await axios.delete(BACKEND_URL + "/api/v1/delete", {
+                data: { 
+                    confirmationText
+                },
+                headers: {
+                    "Authorization": localStorage.getItem(TOKEN)
+                }
+            })
+        
+        localStorage.removeItem(TOKEN);
+        localStorage.removeItem(USERNAME);
+        navigate("/signin");
     }
     return <div className="min-w-32 md:w-64 border h-screen flex flex-col">
         <div className="flex items-center p-2 md:py-4 md:justify-center">
