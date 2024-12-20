@@ -1,24 +1,25 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { CrossIcon } from "../icons/CrossIcon";
 import { Button } from "./ui/Button";
-import { Input } from "./Input";
+import { Input, TypeDropDown } from "./Input";
 import { BACKEND_URL, TOKEN } from "../config";
 
 
 export function ContentModal({open, onClose}){
+    const [types, setTypes] = useState<string>('');
 
     const titleRef = useRef<HTMLInputElement>();
     const linkRef = useRef<HTMLInputElement>();
-    const typeRef = useRef<HTMLInputElement>();
+    // const typeRef = useRef<HTMLInputElement>();
 
     async function addContent(){
         const title = titleRef.current?.value;
         const link = linkRef.current?.value;
-        const type = typeRef.current?.value;
+        // const type = typeRef.current?.value;
 
         await axios.post(`${BACKEND_URL}/api/v1/content`,{
-            link, title, type
+            link, title, type: types
         },{
             headers:{
                 "Authorization": localStorage.getItem(TOKEN)
@@ -35,13 +36,14 @@ export function ContentModal({open, onClose}){
                     <span className=" bg-white p-4 rounded">
                         <div className="flex justify-end">
                             <div onClick={onClose} className="cursor-pointer">
-                                <CrossIcon />
+                                <CrossIcon className="size-6 cursor-pointer hover:text-red-600"/>
                             </div>
                         </div>
                         <div>
                             <Input reference={titleRef} placeholder={"Title"} />
                             <Input reference={linkRef} placeholder={"Link"} />
-                            <Input reference={typeRef} placeholder={"Type: twitter | youtube"} />
+                            {/* <Input reference={typeRef} placeholder={"Type: twitter | youtube"} /> */}
+                            <TypeDropDown types={types} setType={setTypes}/>
                         </div>
                         <div className="flex justify-center mt-2" >
                             <Button variant={"primary"} text={"Submit"} size={"md"} onClick={addContent}/>

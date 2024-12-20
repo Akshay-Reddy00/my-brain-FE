@@ -5,33 +5,23 @@ import { BrainIcon } from "../../icons/BrainIcon";
 import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
 import { SideBarItem } from "./SideBarItem";
+import { useState } from "react";
+import { Confirmation } from "../ConfirmationModal";
 
 export function SideBar() {
+    const [loading, setLoading] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
     
     function logoutUser(){
+        setLoading(true);
         localStorage.removeItem(TOKEN);
         localStorage.removeItem(USERNAME);
         navigate("/signin");
     }
 
-    async function deleteUser(){
-        console.log('Delete User');
-        const confirmationText = 'DELETE' // Create a modal to popUp and take the confirmationText as input.
-            const response = await axios.delete(BACKEND_URL + "/api/v1/delete", {
-                data: { 
-                    confirmationText
-                },
-                headers: {
-                    "Authorization": localStorage.getItem(TOKEN)
-                }
-            })
-        
-        localStorage.removeItem(TOKEN);
-        localStorage.removeItem(USERNAME);
-        navigate("/signin");
-    }
     return <div className="min-w-32 md:w-64 border h-screen flex flex-col">
+        <Confirmation open={modalOpen} onClose={() => {setModalOpen(false);}}/>
         <div className="flex items-center p-2 md:py-4 md:justify-center">
             <div className="pr-1 md:pr-3">
                 <BrainIcon className="size-7 md:size-10"/>
@@ -42,12 +32,15 @@ export function SideBar() {
             <SideBarItem text={"Twitter"} icon={<TwitterIcon className="size-6 md:size-8"/>}/>
             <SideBarItem text={"Youtube"} icon={<YoutubeIcon className="size-6 md:size-8"/>}/>
         </div>
+        
         <div className="flex flex-col mt-auto p-2 justify-center md:py-4 md:flex md:flex-row md:justify-evenly">
-            <button className="p-2 m-1 md:px-4 py-2 bg-black text-white font-semibold text-lg rounded-md border hover:text-black hover:rounded-md hover:bg-white" onClick={logoutUser}>
+            <button className="p-2 m-1 md:px-4 py-2 bg-black text-white font-semibold text-lg rounded-md border border-gray-300 cursor-pointer hover:text-black hover:rounded-md hover:bg-white" 
+                onClick={logoutUser} disabled={loading}>
                 Logout
             </button>
            
-            <button className="p-2 m-1 md:px-4 py-2 bg-red-600 text-white font-semibold text-lg rounded-md border hover:text-red-600 hover:rounded-md hover:bg-white" onClick={deleteUser}>
+            <button className="p-2 m-1 md:px-4 py-2 bg-red-600 text-white font-semibold text-lg rounded-md border border-gray-300 cursor-pointer hover:text-red-600 hover:rounded-md hover:bg-white" 
+                onClick={()=>setModalOpen(true)} disabled={loading}>
                 Delete User
             </button>
         </div>
